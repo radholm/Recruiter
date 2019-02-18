@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:composition template="/WEB-INF/include/template.xhtml">
+        <f:metadata>
+            <f:viewAction action="#{navView.validate(navView.loginPage)}"/>
+        </f:metadata>
+        <ui:define name="body">
+            <div class="container my-5">
+                <div class="row justify-content-center">
+                    <div class="col-md-5">
+                        <div class="row justify-content-center">
+                            <h2 class="mb-5">#{lang.login_header}</h2>
+                        </div>
+                        <h:form id="loginform" class="needs-validation form-signin col-md">
+                            <div class="mb-3 form-group">
+                                <h:inputText binding="#{testval}" class="form-control" id="test" a:placeholder="#{lang.username}" required="true" requiredMessage="#{lang.username_required}"/>
+                                <p class="text-center">
+                                    <h:message class="mb-3 text-danger" for="test" />
+                                </p>
+                                <h:inputSecret binding="#{testpwd}" class="form-control" id="testpwd" a:placeholder="#{lang.password}" required="true" requiredMessage="#{lang.password_required}"/>
+                                <p class="text-center">
+                                    <h:message class="mb-3 text-center text-danger" for="testpwd" />
+                                </p>
+                            </div>
+                            <div class="form-group justify-content-center">
+                                <p class="text-center">
+                                    <h:commandButton class="btn btn-lg btn-primary btn-block" id="testbtn" value="#{lang.sign_in}" action="#{manager.login(testval.value, testpwd.value)}"/>         
+                                </p>
+                            </div>
+                        </h:form>
+                        <h:form>
+                            <div class="form-group">
+                                <p class="text-center">
+                                    <h:outputLink class="dropdown-item" value = "#{navView.registerPage}">#{lang.register_redirect}</h:outputLink>
+                                </p>
+                            </div>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>
+

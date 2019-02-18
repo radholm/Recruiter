@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    <ui:composition template="/WEB-INF/include/template.xhtml">
+        <f:metadata>
+            <f:viewAction action="#{navView.validate(navView.applicationPage)}" />
+        </f:metadata>
+        <ui:define name="body">
+            <div class="container">
+                <div class="starter-template">
+                    <h1>Welcome to Recruiter</h1>
+                    <p class="lead">Search among applicants for recruitment.<br/> Navigate through using the "Search Filter" or "Jobs"-tab.</p>
+                </div>
+                <style type="text/css">
+                    table { page-break-inside: auto }
+                    tr    { page-break-inside:avoid; page-break-after:auto }
+                    thead { display:table-header-group }
+                    tfoot { display:table-footer-group }
+                </style>
+                <table id="applications" class="table table-bordered table-hover nowrap" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>#{lang.application_status}</th>
+                            <th>#{lang.application_review}</th>
+                            <th>#{lang.person_firstname}</th>
+                            <th>#{lang.person_lastname}</th>
+                            <th>#{lang.competence_desc}</th>
+                            <th>#{lang.person_dob}</th>
+                            <th>#{lang.person_email}</th>
+                            <th>#{lang.from_date}</th>
+                            <th>#{lang.end_date}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ui:repeat value="#{manager.allApps}" var="app" varStatus="loop">
+                            <tr>
+                                <td id="#{app.person.fname}">#{manager.convert(app.application.applicationStatus)}</td>
+                                <td><div class="container">
+                                        <div class="row" id="#{app.person.username}">
+                                            <h:form>
+                                                <h:commandButton value="#{lang.application_review}" class="btn btn-success my-2 mx-5" action="#{manager.review(app)}"/>
+                                            </h:form>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>#{app.person.fname}</td>
+                                <td>#{app.person.lname}</td>
+                                <td>
+                                    <ui:repeat value="#{app.profiles}" var="comp" varStatus="loop">
+                                        #{lang.competence_desc}:<br></br>#{manager.convertId(comp.competence)}<br></br>
+                                        #{lang.competence_exp}:<br></br>#{comp.experience}<br></br>
+                                        <br></br>
+                                    </ui:repeat>
+                                </td>
+                                <td>#{manager.shortDate(app.person.dob)}</td>
+                                <td>#{app.person.email}</td>
+                                <td>
+                                    <ui:repeat value="#{app.availabilities}" var="availability" varStatus="loop">
+                                        #{manager.shortDate(availability.fromDate)}<br></br>
+                                    </ui:repeat>
+                                </td>
+                                <td>
+                                    <ui:repeat value="#{app.availabilities}" var="availability2" varStatus="loop">
+                                        #{manager.shortDate(availability2.toDate)}<br></br>
+                                    </ui:repeat>
+                                </td>
+                            </tr>
+                        </ui:repeat>
+                    </tbody>
+                </table>
+            </div><!-- /.container -->
+            <script>
+                window.onload = function () {
+                    $('#applications').DataTable({
+                        responsive: {
+                            details: {
+                                renderer: $.fn.dataTable.Responsive.renderer.tableAll()
+                            }
+                        }
+                    });
+                };
+            </script>
+        </ui:define>
+    </ui:composition>
+</html>
+

@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    <ui:composition template="/WEB-INF/include/template.xhtml">
+        <f:metadata>
+            <f:viewAction action="#{navView.validate(navView.registerPage)}"/>
+        </f:metadata>
+        <ui:define name="body" class="text-center">
+            <div class="container my-5">
+                <div class="py-5 text-center">
+                    <div class="row justify-content-center">
+                        <div class="col-md-6">
+                            <h3 class="mb-5" align="center">#{lang.register_header}</h3>
+                            <h:form id="regform" class="needs-validation form-horizontal col-md">
+                                <div class="mb-3 form-group">
+                                    <h:inputText binding="#{fname}" id="firstName" class="form-control" a:placeholder="#{lang.person_firstname}" required="true" requiredMessage="#{lang.person_firstname} #{lang.required}"/>
+                                    <p class="text-center"><h:message class="mb-3 text-danger" for="firstName"/></p>
+                                </div>
+                                <div class="form-group">
+                                    <h:inputText binding="#{lname}" id="lastName" class="form-control" a:placeholder="#{lang.person_lastname}" required="true" requiredMessage="#{lang.person_lastname} #{lang.required}"/>
+                                    <p class="text-center"><h:message class="mb-3 text-danger" for="lastName"/></p>
+                                </div>
+
+                                <div class="form-group">
+                                    <h:inputText binding="#{mail}" id="email" class="form-control" a:placeholder="#{lang.person_email}" required="true" requiredMessage="#{lang.person_email} #{lang.required}" validatorMessage="#{lang.email_format_error}">
+                                        <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+                                    </h:inputText>
+                                    <p class="text-center"><h:message class="mb-3 text-danger" for="email"/></p>
+                                </div>
+                                <div class="mb-3 form-group">
+                                    <h:inputText binding="#{uname}" id="uname" class="form-control" a:placeholder="#{lang.username}" required="true" requiredMessage="#{lang.username} #{lang.required}"/>
+                                    <p class="text-center"><h:message class="text-danger" id="usrname" for="uname"/></p>
+                                    <span class="help-block text-center text-muted">#{lang.register_username_label}</span>
+                                </div>
+                                <div class="form-group">
+                                    <h:inputSecret binding="#{pass}" id="pwd" class="form-control" a:placeholder="#{lang.password}" required="true" requiredMessage="#{lang.password} #{lang.required}"/>
+                                    <p class="text-center"><h:message class="mb-3 text-danger" for="pwd"/></p>
+                                    <span class="help-block text-muted">#{lang.register_password_label}</span>
+                                </div>
+
+                                <div class="form-group">
+                                    <h:inputText value="#{manager.date}" id="birthDate" class="form-control" a:placeholder="#{lang.register_dob} (yyyy-mm-dd)" required="true" converterMessage="#{lang.date_format_error}" requiredMessage="#{lang.register_dob} #{lang.required}">
+                                        <f:convertDateTime type="date" pattern="yyyy-MM-dd"/>
+                                    </h:inputText>
+                                    <p class="text-center"><h:message class="mb-3 text-danger" for="birthDate"/></p>
+                                </div>
+                                <div class="form-group justify-content-center">
+                                    <p class="text-center">
+                                        <h:commandButton class="btn btn-lg btn-primary btn-block" id="regbtn" value="#{lang.register}" action="#{manager.register(uname.value, fname.value, lname.value, mail.value, pass.value)}"/>         
+                                    </p>
+                                </div>
+                            </h:form> <!-- /form -->
+                            <h:form>
+                                <div class="form-group">
+                                    <p class="text-center">
+                                        <h:outputLink class="dropdown-item" value = "#{navView.loginPage}">#{lang.register_exists}</h:outputLink>
+                                    </p>
+                                </div>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>

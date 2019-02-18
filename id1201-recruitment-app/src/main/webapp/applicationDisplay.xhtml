@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    <ui:composition template="/WEB-INF/include/template.xhtml">
+        <f:metadata>
+            <f:viewAction action="#{navView.validate(navView.applicationDisplayPage)}" />
+        </f:metadata>
+        <ui:define name="body">
+            <div class="container justify-content-center">
+                <div class="mb-3">
+                    <div class="row mb-3 justify-content-center">
+                        <h2 class="mb-5">#{lang.application_form}</h2>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="row mb-3 justify-content-center">
+                        <div class="col-md-5 mb-3 justify-content-center">
+                            <h4 class="mb-5">#{lang.application_status}</h4>
+                            <br></br>
+                            <p class="mb-3 text-info text-center">#{manager.convert(manager.app.application.applicationStatus)}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="row mb-3 justify-content-center">
+                        <div class="col-md-5 mb-3 justify-content-center">
+                            <h4 class="mb-5">#{lang.personal_information}</h4>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">#{lang.person_username} #{manager.app.person.username}</li>
+                                <li class="list-group-item">#{lang.person_firstname} #{manager.app.person.fname}</li>
+                                <li class="list-group-item">#{lang.person_lastname} #{manager.app.person.lname}</li>
+                                <li class="list-group-item">#{lang.person_dob} #{manager.app.person.dob}</li>
+                                <li class="list-group-item">#{lang.person_email} #{manager.app.person.email}</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="row mb-3 justify-content-center">
+                        <div class="col-md-5 mb-3 justify-content-center">
+                            <h4 class="mb-5">#{lang.competence_desc}</h4>
+                            <ul class="list-group list-group-flush">
+                                <ui:repeat value="#{manager.app.profiles}" var="profile">
+                                    <li class="list-group-item">
+                                        #{lang.competence_desc} #{profile.competence}<br></br>
+                                        #{lang.competence_exp} #{profile.experience}
+                                    </li>
+                                </ui:repeat>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row mb-3 justify-content-center">
+                        <div class="col-md-5 mb-3">
+                            <h4 class="mb-5">#{lang.availability}</h4>
+                            <ul class="list-group list-group-flush">
+                                <ui:repeat value="#{manager.app.availabilities}" var="value">
+                                    <li class="list-group-item">
+                                        #{lang.availability_from} #{value.fromDate}<br></br>
+                                        #{lang.availability_to} #{value.toDate}
+                                    </li>
+                                </ui:repeat>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>

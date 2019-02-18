@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<faces-config version="2.2"
+              xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+    <context-param>
+        <param-name>javax.faces.VALIDATE_EMPTY_FIELDS</param-name>
+        <param-value>true</param-value>
+    </context-param>
+    <application>
+        <locale-config>
+            <default-locale>en</default-locale>
+            <supported-locale>se</supported-locale>
+        </locale-config>
+        <resource-bundle>
+            <base-name>se.kth.id1201.recruitment.lang.template</base-name>
+            <var>lang</var>
+        </resource-bundle>
+    </application>
+</faces-config>

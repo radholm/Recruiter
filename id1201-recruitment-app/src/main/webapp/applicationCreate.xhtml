@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough">
+    <ui:composition template="/WEB-INF/include/template.xhtml">
+        <f:metadata>
+            <f:viewAction action="#{navView.validate(navView.applicationCreatePage)}"/>
+        </f:metadata>
+        <ui:define name="body">
+            <div class="container my-5">
+                <div class="row mb-3 justify-content-center">
+                    <h2 class="mb-5">#{lang.application_form}</h2>
+                </div>
+                <p class="text-center">
+                    <h:messages globalOnly="true" class="mb-3 text-danger" style="text-danger"/>
+                </p>
+                <div class="row justify-content-center">
+                    <div class="col-md-5">
+                        <h4 class="mb-5">#{lang.personal_information}</h4>
+                        <div class="mb-3">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">#{lang.person_username} #{manager.person.username}</li>
+                                <li class="list-group-item">#{lang.person_firstname} #{manager.person.fname}</li>
+                                <li class="list-group-item">#{lang.person_lastname} #{manager.person.lname}</li>
+                                <li class="list-group-item">#{lang.person_dob} #{manager.person.dob}</li>
+                                <li class="list-group-item">#{lang.person_email} #{manager.person.email}</li>
+                            </ul>
+                        </div>
+                        <br></br>
+                        <br></br>
+                    </div>
+                    <div class="col-md-5">
+                        <h4 class="mb-5">#{lang.competence_profile}</h4>
+                        <div class="form-group mb-3">
+                            <h:form>
+                                <label for="sel1">#{lang.competence_your}</label>
+                                <ul class="form-group" id="sel1">
+                                    <ui:repeat value="#{manager.userCompList}" var="value">
+                                        <li class="list-group-item list-group-item-action">
+                                            <div class="row">
+                                                <div class="col">
+                                                    #{lang.competence_desc}: #{manager.convertId(value.competence)} <br></br>
+                                                    #{lang.competence_exp}: #{value.experience}
+                                                </div>
+                                                <div class="col">
+                                                    <h:commandButton value="#{lang.competence_remove}" type="submit" action="#{manager.removeCompetence(manager.convertId(value.competence))}" class="btn btn-outline-success mx-5 mb-2 my-sm-0"></h:commandButton>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ui:repeat>
+                                </ul>
+                            </h:form>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="sel1">#{lang.competence_add}</label>
+                            <h:form>
+                                <div class="mb-3">
+                                    <h:selectOneMenu value="#{manager.selectedComp}" class="form-control mb-3" id="sel1">
+                                        <f:selectItems value="#{manager.compList}" />
+                                    </h:selectOneMenu>
+                                </div>
+                                <div class="mb-3">
+                                    <h:inputText binding="#{experience}" id="experience" class="form-control mb-3" a:placeholder="#{lang.competence_yoe}" required="true" requiredMessage="#{lang.competence_yoe} #{lang.required}"/>
+                                    <h:commandButton value="#{lang.competence_submit}" type="submit" action="#{manager.addCompetence(experience.value)}" class="btn btn-outline-success my-2 my-sm-0"></h:commandButton>
+                                </div>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="row">
+                        <h:form class="needs-validation col-md">
+                            <div class="mb-3">
+                                <h4 class="mb-5">#{lang.availability}</h4>
+                                <div class="form-group">
+                                    <h:inputText value="#{manager.fromDate}" id="fromDate" class="form-control" a:placeholder="yyyy-MM-dd" required="true" converterMessage="Format error. Use YYYY-MM-DD format" requiredMessage="Field is required">
+                                        <f:convertDateTime type="date" pattern="yyyy-MM-dd"/>
+                                    </h:inputText>
+                                    <p class="text-center"><h:message class="mb-3 text-danger" for="fromDate"/></p>
+                                </div>
+                                <div class="form-group">
+                                    <h:inputText value="#{manager.toDate}" id="toDate" class="form-control" a:placeholder="yyyy-MM-dd" required="true" converterMessage="Format error. Use YYYY-MM-DD format" requiredMessage="Field is required">
+                                        <f:convertDateTime type="date" pattern="yyyy-MM-dd"/>
+                                    </h:inputText>
+                                    <p class="text-center"><h:message class="mb-3 text-danger" for="toDate"/></p>
+                                </div>
+                            </div>
+                            <h6 class="mb-3">#{lang.application_confirm}</h6>
+                            <h:inputSecret binding="#{apppwd}" class="form-control" id="testpwd" a:placeholder="#{lang.password}" required="true" requiredMessage="#{lang.password_required}"/>
+                            <p class="text-center">
+                                <h:message class="mb-3 text-center text-muted" for="testpwd" />
+                            </p>
+                            <h:commandButton value="#{lang.application_submit}" type="submit" class="btn btn-outline-success my-2 my-sm-0" action="#{manager.submitApplication(apppwd.value)}"></h:commandButton>
+                        </h:form>
+                    </div>
+                </div>
+            </div>
+        </ui:define>
+    </ui:composition>
+</html>
